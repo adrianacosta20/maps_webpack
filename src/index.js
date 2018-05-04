@@ -1,16 +1,19 @@
-import _ from 'lodash';
+import $ from 'jquery';
+import {api_key} from './config';
+import { inputContainer, formContainer, mapContainer } from './components';
 
-import module from './module.js';
+let script = document.createElement('script');
+script.id = 'google_api';
+script.async = true;
+script.defer = true;
+script.src = `https://maps.googleapis.com/maps/api/js?key=${api_key}&libraries=places`;
 
-module();
+document.getElementsByTagName('head')[0].appendChild(script);
 
-function component() {
-    var element = document.createElement('div');
-  
-   // Lodash, now imported by this script
-    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-  
-    return element;
-  }
-  
-  document.body.appendChild(component());
+script.addEventListener('load', function(e){
+  insertComponents();
+}, false);
+
+function insertComponents(){
+  $('#root').append([inputContainer(),formContainer(),mapContainer()]);
+};
